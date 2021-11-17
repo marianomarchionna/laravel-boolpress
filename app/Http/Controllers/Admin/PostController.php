@@ -171,6 +171,8 @@ class PostController extends Controller
     }
 
     public function deleteImage($cover_path) {
-
+        $cover_path = 'post_covers/' . $cover_path;
+        Storage::delete($cover_path);
+        return redirect()->route('admin.posts.index');
     }
 }

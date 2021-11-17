@@ -29,7 +29,7 @@
                         @if ($post->cover)
                             <p>Immagine di copertina presente</p>
                             <img class="d-block" src="{{ asset('storage/' . $post->cover) }}" alt="">
-                            <a href="{{ route('admin.deleteImage', $post->cover) }}">Cancella immagine</a>
+                            <a href="{{ route('admin.deleteImage', substr($post->cover, 12)) }}">Cancella immagine</a>
                         @else
                             <p>Immagine di copertina non presente</p>
                         @endif

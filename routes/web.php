@@ -21,6 +21,10 @@ Route::get('/', 'HomeController@index')->name('index');
 Route::get('/posts', 'PostController@index')->name('index');
 Route::get('/posts/{slug}', 'PostController@show')->name('show');
 
+Route::get('/contact', 'HomeController@contact')->name('contacts');
+Route::post('/contact', 'HomeController@handleContactForm')->name('contacts.send');
+Route::get('/thank-you', 'HomeController@thankYou')->name('contacts.thank-you');
+
 // Serie di rotte che gestiscono tutto il meccanismo di autenticazione
 Auth::routes();
 
@@ -36,5 +40,5 @@ Route::middleware('auth')->prefix('admin')->namespace('Admin')->name('admin.')
         Route::resource('/users', 'UserController');
 
         //rotta per cancellazione immagine 
-        Route::get('/deleteImgage', 'PostController@deleteImage')->name('deleteImage');
+        Route::get('/deleteImgage/{cover_path}', 'PostController@deleteImage')->name('deleteImage');
     });
