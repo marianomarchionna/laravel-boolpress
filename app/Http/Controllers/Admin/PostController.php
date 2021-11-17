@@ -120,7 +120,8 @@ class PostController extends Controller
             'title' => 'required|max:255',
             'content' => 'required',
             'category_id' => 'nullable|exists:categories,id',
-            'tags' => 'exists:tags,id'
+            'tags' => 'exists:tags,id',
+            'image' => 'nullable|image'
         ]);
         
         $data = $request->all();
@@ -137,6 +138,14 @@ class PostController extends Controller
             }
             $data['slug'] = $slug;
         }
+        //verifico se è stata un'immagine
+        if (array_key_exists('image', $data)) {
+            //elimino vecchia immagine e salvo l'immagine e recupero il path
+            Storage::delete($post->cover);
+            $cover_path = Storage::put('post_covers', $data['image']);
+            $data['cover'] = $cover_path;
+        }
+
         $post->update($data);
         //if($data->tags) ----> equivalente
         if (array_key_exists('tags', $data)){
@@ -159,5 +168,9 @@ class PostController extends Controller
         // $post->tags()->detach($post->id);
         $post->delete();
         return redirect()->route('admin.posts.index')->with('deleted', 'Il post è stato correttamente eliminato');
+    }
+
+    public function deleteImage($cover_path) {
+
     }
 }

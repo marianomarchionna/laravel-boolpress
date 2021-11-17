@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-12">
                 <h1>Modifica post</h1>
-                <form action="{{ route('admin.posts.update', $post->id) }}" method="POST">
+                <form action="{{ route('admin.posts.update', $post->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
@@ -20,6 +20,21 @@
                     <div class="form-group">
                         <label for="content">Contenuto</label>
                         <textarea name="content" id="content" class="form-control" @error('content') is-invalid @enderror>{!! old('content', $post->content) !!}</textarea>
+                        @error('content')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        @if ($post->cover)
+                            <p>Immagine di copertina presente</p>
+                            <img class="d-block" src="{{ asset('storage/' . $post->cover) }}" alt="">
+                            <a href="{{ route('admin.deleteImage', $post->cover) }}">Cancella immagine</a>
+                        @else
+                            <p>Immagine di copertina non presente</p>
+                        @endif
+                        <label class="d-block" for="image">Immagine di copertina</label>
+                        <input type="file" name="image" id="image" class="form-control @error('image') is-invalid @enderror">
                         @error('content')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror

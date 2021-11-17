@@ -34,4 +34,7 @@ Route::middleware('auth')->prefix('admin')->namespace('Admin')->name('admin.')
         Route::resource('/categories', 'CategoryController');
         Route::resource('/tags', 'TagController');
         Route::resource('/users', 'UserController');
+
+        //rotta per cancellazione immagine 
+        Route::get('/deleteImgage', 'PostController@deleteImage')->name('deleteImage');
     });
